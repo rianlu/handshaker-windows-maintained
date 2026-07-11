@@ -21,13 +21,7 @@
 
 ## 使用说明
 
-当前仓库产出的是维护后的 `HandShaker.Detector.exe`, 不是完整安装器.
-
-1. 安装官方 Windows 版 HandShaker.
-2. 完全退出 HandShaker 和 Detector.
-3. 备份安装目录中的原始 `HandShaker.Detector.exe`.
-4. 使用 `dist/HandShaker.Detector.exe` 替换原文件.
-5. 重新启动 HandShaker.
+直接运行 `dist/HandShaker-Windows-Maintained-Setup.exe`. 安装包会启动官方安装流程, 安装完成后自动替换维护版 Detector 并重新启动 HandShaker, 用户无需手动安装补丁.
 
 当前文件未使用付费 Windows 代码签名证书. SmartScreen 或 UAC 可能显示"未知发布者"; 少数企业设备可能禁止运行未签名程序.
 
@@ -47,7 +41,14 @@ py tools\patch_detector.py
 py tools\check_detector.py
 ```
 
-产物输出到 `dist/HandShaker.Detector.exe`.
+在 macOS 维护环境中构建单文件安装包:
+
+```sh
+./tools/build_installer.sh
+python3 ./tools/check_installer.py
+```
+
+产物输出到 `dist/HandShaker.Detector.exe` 和 `dist/HandShaker-Windows-Maintained-Setup.exe`.
 
 受支持的原始文件 SHA-256:
 
@@ -62,6 +63,7 @@ py tools\check_detector.py
 ├── original/           # 原始 Detector 文件
 ├── src/                # 反编译 IL, 用于审计修改位置
 ├── tools/              # 补丁和校验脚本
+├── installer/          # 单文件安装包配置
 └── dist/               # 修复后的 Detector 文件
 ```
 
