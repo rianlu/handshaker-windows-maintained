@@ -5685,8 +5685,7 @@
       IL_0042:  ldloc.1
       IL_0043:  ldfld      uint32 [HandShaker.Infrastructure]HandShaker.Infrastructure.USBLibs.USBClass/AdbDeviceInfo::ProductId
       IL_0048:  ldarg.2
-    IL_0049:  pop
-    IL_004a:  pop
+    IL_0049:  bne.un.s   IL_0057
 
       IL_004b:  ldarg.3
       IL_004c:  ldloc.1
