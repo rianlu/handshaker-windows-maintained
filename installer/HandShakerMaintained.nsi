@@ -2,6 +2,7 @@ Unicode true
 RequestExecutionLevel admin
 
 !include "LogicLib.nsh"
+!include "FileFunc.nsh"
 !include "x64.nsh"
 
 Name "HandShaker Windows Maintained"
@@ -11,6 +12,18 @@ ShowInstDetails show
 
 Page directory
 Page instfiles
+
+Function .onInit
+  SetRegView 64
+  ReadRegStr $0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\HandShaker" "DisplayIcon"
+  ${If} $0 == ""
+    SetRegView 32
+    ReadRegStr $0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\HandShaker" "DisplayIcon"
+  ${EndIf}
+  ${If} $0 != ""
+    ${GetParent} "$0" $INSTDIR
+  ${EndIf}
+FunctionEnd
 
 Section "HandShaker"
   nsExec::ExecToLog 'taskkill /F /IM HandShaker.Detector.exe'

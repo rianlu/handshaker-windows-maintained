@@ -9,6 +9,8 @@ SOURCE_SHA256 = "4732405f7a9cc014c8d95e0de2a4050538a2408ae82f40fc05b9ed71daec1b8
 
 # SwitchToAoa 中的三个常量: 首轮间隔, 首轮次数, 驱动安装后的间隔.
 PATCHES = {
+    # ADB 复合设备的事件 PID 可能与 ADB 接口 PID 不同, VID 和序列号已足够确认设备.
+    0x27D9: (bytes.fromhex("33 0c"), bytes.fromhex("26 26")),
     0x2925: (bytes.fromhex("d0 07 00 00"), bytes.fromhex("fa 00 00 00")),
     0x2940: (bytes.fromhex("0f"), bytes.fromhex("03")),
     0x2954: (bytes.fromhex("d0 07 00 00"), bytes.fromhex("f4 01 00 00")),
