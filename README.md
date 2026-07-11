@@ -14,6 +14,8 @@
 ## 功能状态
 
 - 保留原版 HandShaker 主程序, 资源, 依赖和通信方式.
+- 内置完整客户端和安装依赖, 不再调用官方 Web 下载服务.
+- 使用新版 Android Platform Tools, 并禁用旧版反复重启 ADB 的逻辑.
 - 将首次 WinUSB 检测从 15 次, 每次 2 秒调整为 3 次, 每次 250 毫秒.
 - 将安装 ADB 驱动后的检测间隔从 2 秒调整为 500 毫秒, 保留 5 次重试.
 - 提供可重复执行的补丁和校验脚本.
@@ -21,7 +23,7 @@
 
 ## 使用说明
 
-直接运行 `dist/HandShaker-Windows-Maintained-Setup.exe`. 安装包会启动官方安装流程, 安装完成后自动替换维护版 Detector 并重新启动 HandShaker, 用户无需手动安装补丁.
+直接运行 `dist/HandShaker-Windows-Maintained-Offline-Setup.exe`. 安装包内置完整客户端, 驱动, Bonjour, 新版 ADB 和维护版 Detector, 无需联网下载或手动安装补丁.
 
 当前文件未使用付费 Windows 代码签名证书. SmartScreen 或 UAC 可能显示"未知发布者"; 少数企业设备可能禁止运行未签名程序.
 
@@ -48,7 +50,7 @@ py tools\check_detector.py
 python3 ./tools/check_installer.py
 ```
 
-产物输出到 `dist/HandShaker.Detector.exe` 和 `dist/HandShaker-Windows-Maintained-Setup.exe`.
+产物输出到 `dist/HandShaker.Detector.exe` 和 `dist/HandShaker-Windows-Maintained-Offline-Setup.exe`.
 
 受支持的原始文件 SHA-256:
 
@@ -69,7 +71,8 @@ python3 ./tools/check_installer.py
 
 ## 已知限制
 
-- 当前仅维护 Detector 的 USB/AOA 切换逻辑, 不维护完整 Windows 主程序.
+- 当前维护完整离线分发包, Detector USB/AOA 切换逻辑和 ADB 连接稳定性.
+- Moto 等 AOA 驱动不兼容设备优先使用 ADB 直连; 首次连接仍需开启并授权 USB 调试.
 - 修改后的文件不再具有原厂 Authenticode 签名.
 - 驱动安装和设备枚举仍受 Windows, USB 数据线和手机 USB 模式影响.
 

@@ -1,52 +1,43 @@
 Unicode true
 RequestExecutionLevel admin
-SilentInstall silent
-AutoCloseWindow true
 
-!include "FileFunc.nsh"
 !include "LogicLib.nsh"
+!include "x64.nsh"
 
 Name "HandShaker Windows Maintained"
-OutFile "..\dist\HandShaker-Windows-Maintained-Setup.exe"
+OutFile "..\dist\HandShaker-Windows-Maintained-Offline-Setup.exe"
+InstallDir "$PROGRAMFILES32\HandShaker"
+ShowInstDetails show
 
-Section
-  InitPluginsDir
-  SetOutPath "$PLUGINSDIR"
-  File /oname=OfficialSetup.exe "..\original\HandShaker_Official_Web_Setup.exe"
-  File /oname=HandShaker.Detector.exe "..\dist\HandShaker.Detector.exe"
+Page directory
+Page instfiles
 
-  ExecWait '"$PLUGINSDIR\OfficialSetup.exe"' $0
-  ${If} $0 != 0
-    MessageBox MB_ICONSTOP "HandShaker 官方安装程序未成功完成, 错误码: $0"
-    Abort
-  ${EndIf}
-
-  SetRegView 32
-  ReadRegStr $1 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\HandShaker" "DisplayIcon"
-  ${If} $1 == ""
-    SetRegView 64
-    ReadRegStr $1 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\HandShaker" "DisplayIcon"
-  ${EndIf}
-  ${GetParent} "$1" $2
-
-  ${IfNot} ${FileExists} "$2\HandShaker.exe"
-    MessageBox MB_ICONSTOP "已完成官方安装, 但无法定位 HandShaker 安装目录."
-    Abort
-  ${EndIf}
-
+Section "HandShaker"
   nsExec::ExecToLog 'taskkill /F /IM HandShaker.Detector.exe'
   nsExec::ExecToLog 'taskkill /F /IM HandShaker.exe'
   nsExec::ExecToLog 'taskkill /F /IM HandShakerStart.exe'
-  CopyFiles /SILENT "$PLUGINSDIR\HandShaker.Detector.exe" "$2\HandShaker.Detector.exe"
+  nsExec::ExecToLog 'taskkill /F /IM adb.exe'
 
-  ${IfNot} ${FileExists} "$2\HandShaker.Detector.exe"
-    MessageBox MB_ICONSTOP "维护版 Detector 安装失败."
-    Abort
-  ${EndIf}
+  SetOutPath "$INSTDIR"
+  SetOverwrite on
+  File /r "..\build\windows-payload\*"
 
-  ${If} ${FileExists} "$2\HandShakerStart.exe"
-    ExecShell "open" "$2\HandShakerStart.exe"
+  ${If} ${RunningX64}
+    ExecWait 'msiexec /i "$INSTDIR\Bonjour64.msi" /qn /norestart'
   ${Else}
-    ExecShell "open" "$2\HandShaker.exe"
+    ExecWait 'msiexec /i "$INSTDIR\Bonjour.msi" /qn /norestart'
   ${EndIf}
+
+  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\HandShaker" "DisplayName" "HandShaker Windows Maintained"
+  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\HandShaker" "DisplayVersion" "2.6.0-maintained"
+  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\HandShaker" "Publisher" "HandShaker Maintained"
+  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\HandShaker" "DisplayIcon" "$INSTDIR\HandShaker.exe"
+  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\HandShaker" "UninstallString" "$INSTDIR\HandShakerUninst.exe"
+
+  CreateDirectory "$SMPROGRAMS\HandShaker"
+  CreateShortcut "$SMPROGRAMS\HandShaker\HandShaker.lnk" "$INSTDIR\HandShakerStart.exe"
+  CreateShortcut "$SMPROGRAMS\HandShaker\卸载 HandShaker.lnk" "$INSTDIR\HandShakerUninst.exe"
+  CreateShortcut "$DESKTOP\HandShaker.lnk" "$INSTDIR\HandShakerStart.exe"
+
+  ExecShell "open" "$INSTDIR\HandShakerStart.exe"
 SectionEnd
