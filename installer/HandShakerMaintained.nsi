@@ -48,9 +48,9 @@ Section "HandShaker"
   WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\HandShaker" "UninstallString" "$INSTDIR\HandShakerUninst.exe"
 
   CreateDirectory "$SMPROGRAMS\HandShaker"
-  CreateShortcut "$SMPROGRAMS\HandShaker\HandShaker.lnk" "$INSTDIR\HandShakerStart.exe"
+  CreateShortcut "$SMPROGRAMS\HandShaker\HandShaker.lnk" "$INSTDIR\HandShaker.AoaLauncher.exe" "" "$INSTDIR\MyIcon.ico"
   CreateShortcut "$SMPROGRAMS\HandShaker\卸载 HandShaker.lnk" "$INSTDIR\HandShakerUninst.exe"
-  CreateShortcut "$DESKTOP\HandShaker.lnk" "$INSTDIR\HandShakerStart.exe"
+  CreateShortcut "$DESKTOP\HandShaker.lnk" "$INSTDIR\HandShaker.AoaLauncher.exe" "" "$INSTDIR\MyIcon.ico"
 
-  ExecShell "open" "$INSTDIR\HandShakerStart.exe"
+  ExecShell "open" "$INSTDIR\HandShaker.AoaLauncher.exe"
 SectionEnd
