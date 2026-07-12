@@ -14,7 +14,7 @@ unzip -q "$stage/aoa_driver.zip" -d "$stage"
 
 cp dist/HandShaker.Detector.exe "$stage/HandShaker.Detector.exe"
 cp build/platform-tools/adb.exe build/platform-tools/AdbWinApi.dll build/platform-tools/AdbWinUsbApi.dll "$stage/"
-mcs -platform:x64 -target:winexe -optimize+ -out:"$stage/HandShaker.AoaLauncher.exe" tools/AoaSwitch.cs
+mcs -platform:anycpu -target:winexe -optimize+ -out:"$stage/HandShaker.AoaLauncher.exe" tools/AoaSwitch.cs
 
 makensis installer/HandShakerMaintained.nsi
 shasum -a 256 dist/HandShaker-Windows-Maintained-Offline-Setup.exe

@@ -15,10 +15,7 @@ static class AoaSwitch
     struct DeviceInterfaceData { public int Size; public Guid ClassGuid; public int Flags; public IntPtr Reserved; }
 
     const uint Present = 2, DeviceInterface = 16;
-    static readonly Guid[] InterfaceClasses = {
-        new Guid("88bae032-5a81-49f0-bc3d-a4ff138216d6"),
-        new Guid("f72fe0d4-cbcb-407d-8814-9ed673d0dd6b")
-    };
+    static readonly Guid AdbInterfaceClass = new Guid("f72fe0d4-cbcb-407d-8814-9ed673d0dd6b");
 
     [DllImport("setupapi.dll", SetLastError = true)] static extern IntPtr SetupDiGetClassDevs(ref Guid guid, IntPtr enumerator, IntPtr parent, uint flags);
     [DllImport("setupapi.dll", SetLastError = true)] static extern bool SetupDiEnumDeviceInterfaces(IntPtr set, IntPtr info, ref Guid guid, uint index, ref DeviceInterfaceData data);
@@ -32,27 +29,25 @@ static class AoaSwitch
     static IEnumerable<string> Interfaces()
     {
         var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        foreach (var item in InterfaceClasses) {
-            var guid = item;
-            var set = SetupDiGetClassDevs(ref guid, IntPtr.Zero, IntPtr.Zero, Present | DeviceInterface);
-            if (set == new IntPtr(-1)) continue;
-            try {
-                for (uint i = 0; ; i++) {
-                    var data = new DeviceInterfaceData { Size = Marshal.SizeOf(typeof(DeviceInterfaceData)) };
-                    if (!SetupDiEnumDeviceInterfaces(set, IntPtr.Zero, ref guid, i, ref data)) break;
-                    uint required;
-                    SetupDiGetDeviceInterfaceDetail(set, ref data, IntPtr.Zero, 0, out required, IntPtr.Zero);
-                    var detail = Marshal.AllocHGlobal((int)required);
-                    try {
-                        Marshal.WriteInt32(detail, IntPtr.Size == 8 ? 8 : 6);
-                        if (SetupDiGetDeviceInterfaceDetail(set, ref data, detail, required, out required, IntPtr.Zero)) {
-                            var path = Marshal.PtrToStringUni(IntPtr.Add(detail, 4));
-                            if (path != null && path.IndexOf("VID_18D1", StringComparison.OrdinalIgnoreCase) < 0 && seen.Add(path)) yield return path;
-                        }
-                    } finally { Marshal.FreeHGlobal(detail); }
-                }
-            } finally { SetupDiDestroyDeviceInfoList(set); }
-        }
+        var guid = AdbInterfaceClass;
+        var set = SetupDiGetClassDevs(ref guid, IntPtr.Zero, IntPtr.Zero, Present | DeviceInterface);
+        if (set == new IntPtr(-1)) yield break;
+        try {
+            for (uint i = 0; ; i++) {
+                var data = new DeviceInterfaceData { Size = Marshal.SizeOf(typeof(DeviceInterfaceData)) };
+                if (!SetupDiEnumDeviceInterfaces(set, IntPtr.Zero, ref guid, i, ref data)) break;
+                uint required;
+                SetupDiGetDeviceInterfaceDetail(set, ref data, IntPtr.Zero, 0, out required, IntPtr.Zero);
+                var detail = Marshal.AllocHGlobal((int)required);
+                try {
+                    Marshal.WriteInt32(detail, IntPtr.Size == 8 ? 8 : 6);
+                    if (SetupDiGetDeviceInterfaceDetail(set, ref data, detail, required, out required, IntPtr.Zero)) {
+                        var path = Marshal.PtrToStringUni(IntPtr.Add(detail, 4));
+                        if (path != null && path.IndexOf("VID_18D1", StringComparison.OrdinalIgnoreCase) < 0 && seen.Add(path)) yield return path;
+                    }
+                } finally { Marshal.FreeHGlobal(detail); }
+            }
+        } finally { SetupDiDestroyDeviceInfoList(set); }
     }
 
     static bool Transfer(IntPtr handle, byte type, byte request, ushort index, byte[] data)
@@ -93,22 +88,25 @@ static class AoaSwitch
         } catch { }
     }
 
-    static bool SwitchConnected(Dictionary<string, DateTime> attempts)
+    static bool SwitchConnected(Dictionary<string, int> attempts)
     {
         var paths = new List<string>(Interfaces());
-        var now = DateTime.UtcNow;
-        var candidates = paths.FindAll(path => !attempts.TryGetValue(path, out var retryAt) || retryAt <= now);
+        var candidates = paths.FindAll(path => !attempts.TryGetValue(path, out var count) || count < 3);
         var missing = new List<string>();
         foreach (var path in attempts.Keys) if (!paths.Contains(path)) missing.Add(path);
         foreach (var path in missing) attempts.Remove(path);
         if (candidates.Count == 0) return false;
-        StopAdb();
+        if (candidates.Exists(path => !attempts.ContainsKey(path))) StopAdb();
         var switched = false;
         foreach (var path in candidates) {
             var success = false;
             try { success = Switch(path); } catch (Exception error) { Log("switch error=" + error.Message); }
-            if (success) { switched = true; attempts[path] = DateTime.MaxValue; Log("switched " + path); }
-            else attempts[path] = now.AddSeconds(2);
+            if (success) { switched = true; attempts[path] = 3; Log("switched " + path); }
+            else {
+                attempts.TryGetValue(path, out var count);
+                attempts[path] = count + 1;
+                Log("switch failed attempt=" + attempts[path] + " " + path);
+            }
         }
         return switched;
     }
@@ -118,7 +116,7 @@ static class AoaSwitch
         using (var mutex = new Mutex(true, "HandShaker.AoaLauncher", out var owner)) {
             if (!owner) return 0;
             var root = AppDomain.CurrentDomain.BaseDirectory;
-            var attempts = new Dictionary<string, DateTime>(StringComparer.OrdinalIgnoreCase);
+            var attempts = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
             if (SwitchConnected(attempts)) Thread.Sleep(2000);
             Process.Start(new ProcessStartInfo(Path.Combine(root, "HandShakerStart.exe")) { WorkingDirectory = root });
 
