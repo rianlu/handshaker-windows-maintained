@@ -1,0 +1,502 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:HandShakerSimpleSetup" xmlns:converter="clr-namespace:HandShakerSimpleSetup.Converter" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <DropShadowEffect x:Key="ButtonEffect" ShadowDepth="2" BlurRadius="0" Direction="270" Color="White" Opacity="0.35" />
+  <LinearGradientBrush x:Key="ButtonNormalBackground" EndPoint="0.5,1" StartPoint="0.5,0">
+    <GradientStop Color="#ffffff" Offset="0" />
+    <GradientStop Color="#fafafa" Offset="1" />
+  </LinearGradientBrush>
+  <SolidColorBrush x:Key="ButtonNormalForeground" Color="#cc000000" />
+  <LinearGradientBrush x:Key="ButtonHoverBackground" EndPoint="0.5,1" StartPoint="0.5,0">
+    <GradientStop Color="#efefef" Offset="0" />
+    <GradientStop Color="#efefef" Offset="1" />
+  </LinearGradientBrush>
+  <LinearGradientBrush x:Key="ButtonPressedBackground" EndPoint="0.5,1" StartPoint="0.5,0">
+    <GradientStop Color="#d5d5d5" Offset="0" />
+    <GradientStop Color="#e1e1e1" Offset="1" />
+  </LinearGradientBrush>
+  <SolidColorBrush x:Key="ButtonPressedBorderBrush" Color="#c1c1c1" />
+  <LinearGradientBrush x:Key="ButtonDisableBackground" EndPoint="0.5,1" StartPoint="0.5,0">
+    <GradientStop Color="#ffffff" Offset="0" />
+    <GradientStop Color="#fdfdfd" Offset="1" />
+  </LinearGradientBrush>
+  <SolidColorBrush x:Key="ButtonDisableForeground" Color="#4c000000" />
+  <SolidColorBrush x:Key="ButtonDisableBorderBrush" Color="#f1f1f1" />
+  <Style x:Key="MinImageButtonStyle" TargetType="{x:Type Button}">
+    <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Button}">
+          <Border Name="Chrome" SnapsToDevicePixels="True" IsHitTestVisible="True">
+            <Image Name="image" Height="36" Width="30" Source="../Resources/min.png" Stretch="Uniform" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="UIElement.IsMouseOver" Value="True">
+              <Setter TargetName="Chrome" Property="Border.Background" Value="#14000000" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="Chrome" Property="Border.Background" Value="#26000000" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter Property="Foreground" Value="#ADADAD" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="MaxImageButtonStyle" TargetType="{x:Type ToggleButton}">
+    <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ToggleButton}">
+          <Border Name="Chrome" SnapsToDevicePixels="True" IsHitTestVisible="True">
+            <Image Name="image" Height="36" Width="30" Source="../Resources/max1_normal.png" Stretch="Uniform" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="ToggleButton.IsChecked" Value="True">
+              <Setter TargetName="image" Property="Image.Source" Value="../Resources/max2_normal.png" />
+            </Trigger>
+            <Trigger Property="UIElement.IsMouseOver" Value="True">
+              <Setter TargetName="Chrome" Property="Border.Background" Value="#14000000" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="Chrome" Property="Border.Background" Value="#26000000" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter Property="Foreground" Value="#ADADAD" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="MaxRestoreButtonStyle" TargetType="{x:Type Button}">
+    <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Button}">
+          <Border Name="Chrome" SnapsToDevicePixels="True" IsHitTestVisible="True">
+            <Image Name="image" Height="36" Width="30" Source="../Resources/max1_normal.png" Stretch="Uniform" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <DataTrigger Value="max" Binding="{Binding Path=Tag, RelativeSource={RelativeSource Self}}">
+              <Setter TargetName="image" Property="Image.Source" Value="../Resources/max2_normal.png" />
+            </DataTrigger>
+            <DataTrigger Value="{x:Static sys:String.Empty}" Binding="{Binding Path=Tag, RelativeSource={RelativeSource Self}}">
+              <Setter TargetName="image" Property="Image.Source" Value="../Resources/max1_normal.png" />
+            </DataTrigger>
+            <Trigger Property="UIElement.IsMouseOver" Value="True">
+              <Setter TargetName="Chrome" Property="Border.Background" Value="#14000000" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="Chrome" Property="Border.Background" Value="#26000000" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter Property="Foreground" Value="#ADADAD" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="CloseImageButtonStyle" TargetType="{x:Type Button}">
+    <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Button}">
+          <Border Name="Chrome" SnapsToDevicePixels="True" IsHitTestVisible="True">
+            <Image Name="image" Height="36" Width="30" Source="../Resources/close.png" Stretch="Uniform" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="UIElement.IsMouseOver" Value="True">
+              <Setter TargetName="image" Property="Image.Source" Value="../Resources/close_press.png" />
+              <Setter TargetName="Chrome" Property="Border.Background">
+                <Setter.Value>
+                  <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#e6675d" Offset="0" />
+                    <GradientStop Color="#e35b51" Offset="1" />
+                  </LinearGradientBrush>
+                </Setter.Value>
+              </Setter>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="image" Property="Image.Source" Value="../Resources/close_press.png" />
+              <Setter TargetName="Chrome" Property="Border.Background">
+                <Setter.Value>
+                  <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#d1544b" Offset="0" />
+                    <GradientStop Color="#d45f56" Offset="1" />
+                  </LinearGradientBrush>
+                </Setter.Value>
+              </Setter>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter Property="Foreground" Value="#ADADAD" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <SolidColorBrush x:Key="CheckBoxFillNormal" Color="#F4F4F4" />
+  <SolidColorBrush x:Key="CheckBoxStroke" Color="#8E8F8F" />
+  <Style x:Key="EmptyCheckBoxFocusVisual">
+    <Setter Property="Control.Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <Rectangle Margin="1" SnapsToDevicePixels="True" Stroke="#FF000000" StrokeThickness="1" StrokeDashArray="1 2" />
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="CheckRadioFocusVisual">
+    <Setter Property="Control.Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <Rectangle Margin="14,0,0,0" SnapsToDevicePixels="True" Stroke="#FF000000" StrokeThickness="1" StrokeDashArray="1 2" />
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="CheckBoxStyle" TargetType="{x:Type CheckBox}">
+    <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type CheckBox}">
+          <BulletDecorator Background="#00FFFFFF" SnapsToDevicePixels="True" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+              <Image Name="image" Source="../Resources/check_normal.png" Width="13" Height="13" Stretch="Fill" Margin="0,0,10,0" />
+              <ContentPresenter RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+            </StackPanel>
+          </BulletDecorator>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Property="Foreground" />
+            </Trigger>
+            <Trigger Property="ToggleButton.IsChecked" Value="False">
+              <Setter TargetName="image" Property="Image.Source" Value="../Resources/check_normal.png" />
+            </Trigger>
+            <Trigger Property="ToggleButton.IsChecked" Value="True">
+              <Setter TargetName="image" Property="Image.Source" Value="../Resources/check_active.png" />
+            </Trigger>
+            <MultiTrigger>
+              <MultiTrigger.Conditions>
+                <Condition Property="UIElement.IsMouseOver" Value="True" />
+                <Condition Property="ToggleButton.IsChecked" Value="True" />
+              </MultiTrigger.Conditions>
+              <Setter TargetName="image" Property="Image.Source" Value="../Resources/check_active_hover.png" />
+            </MultiTrigger>
+            <MultiTrigger>
+              <MultiTrigger.Conditions>
+                <Condition Property="UIElement.IsMouseOver" Value="True" />
+                <Condition Property="ToggleButton.IsChecked" Value="False" />
+              </MultiTrigger.Conditions>
+              <Setter TargetName="image" Property="Image.Source" Value="../Resources/check_hover.png" />
+            </MultiTrigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="InstallOptionCheckBoxStyle" TargetType="{x:Type CheckBox}">
+    <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type CheckBox}">
+          <Border Name="border" SnapsToDevicePixels="True" Height="34" CornerRadius="4" BorderThickness="1" BorderBrush="#26000000" Background="{StaticResource ButtonNormalBackground}">
+            <StackPanel Orientation="Horizontal" Margin="14,0">
+              <TextBlock VerticalAlignment="Center" FontSize="14" Text="{StaticResource Installation Options}" Foreground="{StaticResource ButtonNormalForeground}" />
+              <Image Name="image" Margin="6,0,0,0" Height="12" Source="../Resources/unfold.png" VerticalAlignment="Center" Stretch="UniformToFill" />
+            </StackPanel>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="ToggleButton.IsChecked" Value="True">
+              <Setter TargetName="image" Property="Image.Source" Value="../Resources/fold.png" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="border" Property="Border.Background" Value="{StaticResource ButtonPressedBackground}" />
+              <Setter TargetName="border" Property="Border.BorderBrush" Value="{StaticResource ButtonPressedBorderBrush}" />
+            </Trigger>
+            <Trigger Property="UIElement.IsMouseOver" Value="True">
+              <Setter TargetName="border" Property="Border.Background" Value="{StaticResource ButtonHoverBackground}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Property="Foreground" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="StartInstallButtonStyle" TargetType="{x:Type Button}">
+    <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Button}">
+          <Border Name="Chrome" BorderThickness="1" CornerRadius="4" BorderBrush="#4a72df" SnapsToDevicePixels="True" Height="34">
+            <Border.Background>
+              <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF6A94F5" Offset="0" />
+                <GradientStop Color="#FF537EF1" Offset="1" />
+              </LinearGradientBrush>
+            </Border.Background>
+            <Grid>
+              <TextBlock Name="text" Margin="17,0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFFFFFFF" FontSize="14" Text="{TemplateBinding Content}" />
+            </Grid>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="UIElement.IsMouseOver" Value="True">
+              <Setter TargetName="Chrome" Property="Border.Background">
+                <Setter.Value>
+                  <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF769DF6" Offset="0" />
+                    <GradientStop Color="#FF5F89F2" Offset="1" />
+                  </LinearGradientBrush>
+                </Setter.Value>
+              </Setter>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="Chrome" Property="Border.Background">
+                <Setter.Value>
+                  <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF5983E7" Offset="0" />
+                    <GradientStop Color="#FF5F89F2" Offset="1" />
+                  </LinearGradientBrush>
+                </Setter.Value>
+              </Setter>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter TargetName="Chrome" Property="Border.BorderBrush" Value="#4a72df" />
+              <Setter TargetName="Chrome" Property="Border.Background">
+                <Setter.Value>
+                  <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF5983E7" Offset="0" />
+                    <GradientStop Color="#FF5F89F2" Offset="1" />
+                  </LinearGradientBrush>
+                </Setter.Value>
+              </Setter>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="SecondaryButtonStyle" TargetType="{x:Type Button}">
+    <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Button}">
+          <Border Name="Chrome" SnapsToDevicePixels="True" Height="34" CornerRadius="4" BorderThickness="1" BorderBrush="#26000000" Background="{StaticResource ButtonNormalBackground}">
+            <TextBlock Margin="17,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Text="{TemplateBinding Content}" Foreground="{StaticResource ButtonNormalForeground}" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="UIElement.IsMouseOver" Value="True">
+              <Setter TargetName="Chrome" Property="Border.Background" Value="{StaticResource ButtonHoverBackground}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="Chrome" Property="Border.Background" Value="{StaticResource ButtonPressedBackground}" />
+              <Setter TargetName="Chrome" Property="Border.BorderBrush" Value="{StaticResource ButtonPressedBorderBrush}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="PathLabelStyle" TargetType="{x:Type Label}">
+    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+    <Setter Property="Background" Value="#00FFFFFF" />
+    <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Padding" Value="5" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Label}">
+          <Grid>
+            <Border SnapsToDevicePixels="True" CornerRadius="4" BorderThickness="1" BorderBrush="#26000000" Height="28" />
+            <ContentPresenter Margin="10,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" />
+          </Grid>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Property="Foreground" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="ChangeInstallLocationButtonStyle" TargetType="{x:Type Button}">
+    <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Button}">
+          <Border Name="border" SnapsToDevicePixels="True" Height="28" CornerRadius="4" BorderThickness="1" BorderBrush="#26000000" Background="{StaticResource ButtonNormalBackground}">
+            <TextBlock Margin="17,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" Text="{StaticResource Change Install Location}" Foreground="{StaticResource ButtonNormalForeground}" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="border" Property="Border.Background" Value="{StaticResource ButtonPressedBackground}" />
+              <Setter TargetName="border" Property="Border.BorderBrush" Value="{StaticResource ButtonPressedBorderBrush}" />
+            </Trigger>
+            <Trigger Property="UIElement.IsMouseOver" Value="True">
+              <Setter TargetName="border" Property="Border.Background" Value="{StaticResource ButtonHoverBackground}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <converter:ProgressBarValueConverter x:Key="progressBarValueConverter" />
+  <Style x:Key="{x:Type local:HSProgressBar}" TargetType="{x:Type local:HSProgressBar}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type local:HSProgressBar}">
+          <Grid Name="grid">
+            <Border Name="border" BorderBrush="#1a000000" CornerRadius="3" BorderThickness="1" SnapsToDevicePixels="True">
+              <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                  <GradientStop Color="#FFE6E6E6" Offset="0" />
+                  <GradientStop Color="#FFE9E9E9" Offset="1" />
+                </LinearGradientBrush>
+              </Border.Background>
+            </Border>
+            <Border BorderBrush="#5380eb" HorizontalAlignment="Left" CornerRadius="3" BorderThickness="1" SnapsToDevicePixels="True">
+              <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                  <GradientStop Color="#729af6" Offset="0" />
+                  <GradientStop Color="#618bf5" Offset="1" />
+                </LinearGradientBrush>
+              </Border.Background>
+              <FrameworkElement.Width>
+                <MultiBinding Converter="{StaticResource progressBarValueConverter}">
+                  <Binding ElementName="grid" />
+                  <Binding Path="Value" RelativeSource="{RelativeSource AncestorType={x:Type local:HSProgressBar}}" />
+                </MultiBinding>
+              </FrameworkElement.Width>
+            </Border>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <sys:Double x:Key="ScrollBarSize">9</sys:Double>
+  <SolidColorBrush x:Key="ScrollBarBackground" Color="White" />
+  <SolidColorBrush x:Key="ScrollBarForeround" Color="#80000000" />
+  <SolidColorBrush x:Key="MouseOverForeground" Color="#FF999999" />
+  <Style x:Key="ScrollBarTrackButton" TargetType="{x:Type RepeatButton}">
+    <Setter Property="Background" Value="#00FFFFFF" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type RepeatButton}">
+          <Border Background="#00FFFFFF" />
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <ControlTemplate x:Key="ThumbTemplate" TargetType="{x:Type Thumb}">
+    <Grid>
+      <Border Name="Bg" CornerRadius="3" SnapsToDevicePixels="True" Background="{StaticResource ScrollBarForeround}" />
+    </Grid>
+    <ControlTemplate.Triggers>
+      <Trigger Property="UIElement.IsMouseOver" Value="True">
+        <Setter TargetName="Bg" Property="Border.Background" Value="{StaticResource MouseOverForeground}" />
+      </Trigger>
+      <Trigger Property="UIElement.IsEnabled" Value="False">
+        <Setter TargetName="Bg" Property="UIElement.Opacity" Value="1" />
+      </Trigger>
+    </ControlTemplate.Triggers>
+  </ControlTemplate>
+  <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
+    <Grid Name="HorizontalRoot" Height="{TemplateBinding FrameworkElement.Height}">
+      <Border Name="BgInner" BorderBrush="#FF808080" BorderThickness="0,0,0,0" Margin="0" SnapsToDevicePixels="True" Background="{StaticResource ScrollBarBackground}" />
+      <Track Name="PART_Track" IsDirectionReversed="False">
+        <Track.DecreaseRepeatButton>
+          <RepeatButton Name="HorizontalLargeDecrease" Command="ScrollBar.PageLeftCommand" IsTabStop="False" Interval="50" Style="{DynamicResource ScrollBarTrackButton}" />
+        </Track.DecreaseRepeatButton>
+        <Track.Thumb>
+          <Thumb Margin="0,1,0,2" Template="{StaticResource ThumbTemplate}" />
+        </Track.Thumb>
+        <Track.IncreaseRepeatButton>
+          <RepeatButton Name="HorizontalLargeIncrease" Command="ScrollBar.PageRightCommand" IsTabStop="False" Interval="50" Style="{DynamicResource ScrollBarTrackButton}" />
+        </Track.IncreaseRepeatButton>
+      </Track>
+    </Grid>
+  </ControlTemplate>
+  <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
+    <Grid Name="VerticalRoot" Height="{TemplateBinding FrameworkElement.Height}" Opacity="1">
+      <Border Name="BgInner" BorderBrush="#FF808080" BorderThickness="0,0,0,0" Margin="0" SnapsToDevicePixels="True" Background="{StaticResource ScrollBarBackground}" />
+      <Track Name="PART_Track" IsDirectionReversed="True">
+        <Track.DecreaseRepeatButton>
+          <RepeatButton Name="HorizontalLargeDecrease" Command="ScrollBar.PageUpCommand" IsTabStop="False" Interval="50" Style="{DynamicResource ScrollBarTrackButton}" />
+        </Track.DecreaseRepeatButton>
+        <Track.Thumb>
+          <Thumb Margin="1,0,2,0" Template="{StaticResource ThumbTemplate}" />
+        </Track.Thumb>
+        <Track.IncreaseRepeatButton>
+          <RepeatButton Name="HorizontalLargeIncrease" Command="ScrollBar.PageDownCommand" IsTabStop="False" Interval="50" Style="{DynamicResource ScrollBarTrackButton}" />
+        </Track.IncreaseRepeatButton>
+      </Track>
+    </Grid>
+  </ControlTemplate>
+  <Style x:Key="DefaultScrollBar" TargetType="{x:Type ScrollBar}">
+    <Setter Property="UIElement.SnapsToDevicePixels" Value="True" />
+    <Setter Property="FrameworkElement.OverridesDefaultStyle" Value="True" />
+    <Style.Triggers>
+      <Trigger Property="ScrollBar.Orientation" Value="Horizontal">
+        <Setter Property="Template" Value="{StaticResource HorizontalScrollBar}" />
+        <Setter Property="Height" Value="{StaticResource ScrollBarSize}" />
+      </Trigger>
+      <Trigger Property="ScrollBar.Orientation" Value="Vertical">
+        <Setter Property="Template" Value="{StaticResource VerticalScrollBar}" />
+        <Setter Property="Width" Value="{StaticResource ScrollBarSize}" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+  <Style x:Key="leftMenuConstainerScrollBar" TargetType="{x:Type ScrollBar}">
+    <Setter Property="Background" Value="#00FFFFFF" />
+  </Style>
+  <Style x:Key="leftMenuConstainerScrollViewer" TargetType="{x:Type ScrollViewer}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ScrollViewer}">
+          <Grid Name="Grid" Background="{TemplateBinding Control.Background}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="*" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Rectangle Name="Corner" Grid.Column="1" Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Grid.Row="1" />
+            <ScrollContentPresenter Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}" CanHorizontallyScroll="False" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" Content="{TemplateBinding ContentControl.Content}" Grid.Column="0" Margin="{TemplateBinding Control.Padding}" Grid.Row="0" />
+            <ScrollBar Name="PART_VerticalScrollBar" AutomationProperties.AutomationId="VerticalScrollBar" Cursor="Arrow" Grid.Column="0" Maximum="{TemplateBinding ScrollViewer.ScrollableHeight}" Minimum="0" Grid.Row="0" Visibility="{TemplateBinding ScrollViewer.ComputedVerticalScrollBarVisibility}" ViewportSize="{TemplateBinding ScrollViewer.ViewportHeight}" HorizontalAlignment="Right" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+            <ScrollBar Name="PART_HorizontalScrollBar" AutomationProperties.AutomationId="HorizontalScrollBar" Cursor="Arrow" Grid.Column="0" Maximum="{TemplateBinding ScrollViewer.ScrollableWidth}" Minimum="0" Orientation="Horizontal" Grid.Row="0" Visibility="{TemplateBinding ScrollViewer.ComputedHorizontalScrollBarVisibility}" ViewportSize="{TemplateBinding ScrollViewer.ViewportWidth}" VerticalAlignment="Bottom" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+          </Grid>
+          <ControlTemplate.Triggers />
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="MsgShowButtonStyle" TargetType="{x:Type Button}">
+    <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Height" Value="32" />
+    <Setter Property="MinWidth" Value="85" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Button}">
+          <Border Name="Chrome" SnapsToDevicePixels="True" CornerRadius="4" BorderThickness="1" BorderBrush="#26000000" TextBlock.FontSize="12" Height="32" TextBlock.Foreground="{StaticResource ButtonNormalForeground}" Background="{StaticResource ButtonNormalBackground}">
+            <TextBlock Text="{TemplateBinding ContentControl.Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="15,0" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="UIElement.IsMouseOver" Value="True">
+              <Setter TargetName="Chrome" Property="Border.Background" Value="{StaticResource ButtonHoverBackground}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="Chrome" Property="Border.Background" Value="{StaticResource ButtonPressedBackground}" />
+              <Setter TargetName="Chrome" Property="Border.BorderBrush" Value="{StaticResource ButtonPressedBorderBrush}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+</ResourceDictionary>

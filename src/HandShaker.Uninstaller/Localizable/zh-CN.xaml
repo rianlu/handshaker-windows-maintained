@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <sys:String x:Key="HandShaker">HandShaker</sys:String>
+  <sys:String x:Key="Uninstall in progress">卸载进行中...</sys:String>
+  <sys:String x:Key="Keep the relevant user files">保留相关用户文件</sys:String>
+  <sys:String x:Key="Start uninstall">开始卸载</sys:String>
+  <sys:String x:Key="Uninstall complete">HandShaker 已卸载, 点击“关闭”完成退出.</sys:String>
+  <sys:String x:Key="Uninstall failed">卸载未完全完成, 将鼠标移到这里查看原因.</sys:String>
+  <sys:String x:Key="Close">关闭</sys:String>
+</ResourceDictionary>

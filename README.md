@@ -36,18 +36,24 @@
 
 ## 构建
 
-构建脚本仅依赖 Python 3 标准库.
+构建分为离线Payload和WPF安装外壳两步. Payload在macOS维护环境生成, WPF外壳在Windows使用系统MSBuild生成.
 
 ```powershell
 py tools\patch_detector.py
 py tools\check_detector.py
 ```
 
-在 macOS 维护环境中构建单文件安装包:
+在macOS维护环境中准备完整离线Payload, 需要Python 3, Mono和NSIS:
 
 ```sh
-./tools/build_installer.sh
-python3 ./tools/check_installer.py
+./tools/build_payload.sh
+```
+
+将仓库和生成的`build/HandShaker.Payload.Setup.exe`同步到Windows后, 构建原版WPF界面的最终单文件安装包:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\build_installer.ps1
+py tools\check_installer.py
 ```
 
 产物输出到 `dist/HandShaker.Detector.exe` 和 `dist/HandShaker-Windows-Maintained-Offline-Setup.exe`.
@@ -62,11 +68,16 @@ python3 ./tools/check_installer.py
 
 ```text
 .
-├── original/           # 原始 Detector 文件
-├── src/                # 反编译 IL, 用于审计修改位置
-├── tools/              # 补丁和校验脚本
-├── installer/          # 单文件安装包配置
-└── dist/               # 修复后的 Detector 文件
+├── original/                   # 原始完整包和Detector
+├── assets/                     # Windows统一图标资源
+├── src/
+│   ├── HandShaker.Detector.il  # Detector反编译IL
+│   ├── HandShaker.Setup/       # 原版WPF安装界面维护源码
+│   └── HandShaker.Uninstaller/ # 同风格WPF卸载界面维护源码
+├── installer/                  # 内部静默Payload安装引擎
+├── tools/                      # 补丁, 构建和校验脚本
+├── build/                      # 构建缓存与中间产物, 不入库
+└── dist/                       # 可交付文件
 ```
 
 ## 已知限制

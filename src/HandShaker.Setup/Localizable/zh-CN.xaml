@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <sys:String x:Key="HandShaker">HandShaker</sys:String>
+  <sys:String x:Key="I have agreed HandShaker">我已同意 HandShaker</sys:String>
+  <sys:String x:Key="User License Agreement">用户许可协议</sys:String>
+  <sys:String x:Key="Installation Options">安装选项</sys:String>
+  <sys:String x:Key="Start Installation">开始安装</sys:String>
+  <sys:String x:Key="Change Install Location">更改安装位置</sys:String>
+  <sys:String x:Key="HandShaker So that you can easily on the Win also freely manage your content in Android phone">HandShaker 使你在 Windows 电脑上可以方便自如地管理 Android 手机中的内容。新增的闪念胶囊应用使你可以在不同平台之间都通过闪念胶囊来记录、查看一闪而过的想法。</sys:String>
+  <sys:String x:Key="Download file in progress">正在准备离线安装包...</sys:String>
+  <sys:String x:Key="Installation in progress">安装进行中...</sys:String>
+  <sys:String x:Key="Download file failed">离线安装包不完整。</sys:String>
+  <sys:String x:Key="Install framework prompt">检测到安装程序以兼容模式运行，这会导致.net framework 4.5 不能正确安装。兼容模式设置已修改，请重新运行安装程序。</sys:String>
+  <sys:String x:Key="Install framework error">.Net framework 4.5 没有正确安装!</sys:String>
+  <sys:String x:Key="Time left">剩余时间</sys:String>
+  <sys:String x:Key="NSHumanReadableCopyright">
+Copyright © 2017, Smartisan Digital Co., Ltd，保留一切权利。
+    </sys:String>
+  <sys:String x:Key="IntroduceImage">introduce_cn.png</sys:String>
+  <sys:String x:Key="OK">确定</sys:String>
+  <sys:String x:Key="complete">HandShaker 已成功安装！</sys:String>
+  <sys:String x:Key="Close">关闭</sys:String>
+  <sys:String x:Key="Open">打开</sys:String>
+</ResourceDictionary>
