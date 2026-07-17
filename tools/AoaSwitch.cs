@@ -67,7 +67,7 @@ static class AoaSwitch
                 if (!Transfer(handle, 0xC0, 51, 0, protocol)) return false;
                 var version = BitConverter.ToUInt16(protocol, 0);
                 if (version < 1 || version > 2) return false;
-                var values = new[] { "Smartisan", "HandShaker", "HandShaker", "1.0", "http://sf.smartisan.com/sf/release/apk", "" };
+                var values = new[] { "Smartisan", "HandShaker", "HandShaker", "1.0", "https://github.com/rianlu/handshaker-android-maintained/releases/latest", "" };
                 for (ushort i = 0; i < values.Length; i++) if (!Transfer(handle, 0x40, 52, i, Encoding.UTF8.GetBytes(values[i] + "\0"))) return false;
                 return Transfer(handle, 0x40, 53, 0, new byte[0]);
             } finally { WinUsb_Free(handle); }
