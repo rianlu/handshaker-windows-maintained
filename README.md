@@ -31,7 +31,7 @@
 
 - 原程序目标环境为 Windows 8 及以上版本.
 - 原程序集为 32 位 .NET Framework 4.5.2 WPF 程序.
-- Android 设备在 Windows 上使用 USB 连接时, 通常需要将 USB 用途切换为"文件传输".
+- Android 设备在 Windows 上使用 USB 连接时, 维护版 Detector 和 AoaLauncher 会自动完成 AOA 模式切换, 无需手动将 USB 用途切换为"文件传输". 如长时间无响应, 可重新插拔数据线并重试.
 - 首次驱动安装, Android AOA 授权弹窗和完整数据加载仍需在 Windows 真机验证.
 
 ## 构建
