@@ -5,7 +5,7 @@ $payload = Join-Path $root "build\HandShaker.Payload.Setup.exe"
 $project = Join-Path $root "src\HandShaker.Setup\HandShaker.Setup.csproj"
 $uninstallerProject = Join-Path $root "src\HandShaker.Uninstaller\HandShaker.Uninstaller.csproj"
 $uninstaller = Join-Path $root "build\HandShakerUninst.exe"
-$output = Join-Path $root "dist\HandShaker-Windows-Maintained-Offline-Setup.exe"
+$output = Join-Path $root "dist\handshaker-windows-maintained-2.6.0-r1-x86.exe"
 $cache = Join-Path $env:LOCALAPPDATA "HandShakerBuildCache"
 $package = Join-Path $cache "microsoft.netframework.referenceassemblies.net40.1.0.3.nupkg"
 $references = Join-Path $cache "net40\build\.NETFramework\v4.0"
@@ -44,7 +44,7 @@ if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }
 
-$built = Join-Path $root "src\HandShaker.Setup\bin\Release\HandShaker-Windows-Maintained-Offline-Setup.exe"
+$built = Join-Path $root "src\HandShaker.Setup\bin\Release\handshaker-windows-maintained-2.6.0-r1-x86.exe"
 New-Item -ItemType Directory -Force -Path (Split-Path -Parent $output) | Out-Null
 Copy-Item -Force $built $output
 Get-FileHash -Algorithm SHA256 $output

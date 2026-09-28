@@ -7,7 +7,7 @@
     <ProjectTypeGuids>{60DC8134-EBA5-43B8-BCC9-BB4BC16C2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>WinExe</OutputType>
     <RootNamespace>HandShakerSimpleSetup</RootNamespace>
-    <AssemblyName>HandShaker-Windows-Maintained-Offline-Setup</AssemblyName>
+    <AssemblyName>handshaker-windows-maintained-2.6.0-r1-x86</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <ApplicationIcon>..\..\assets\HandShaker.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>

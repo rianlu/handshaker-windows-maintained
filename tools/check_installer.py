@@ -2,7 +2,7 @@
 from pathlib import Path
 
 root = Path(__file__).resolve().parents[1]
-installer = root / "dist" / "HandShaker-Windows-Maintained-Offline-Setup.exe"
+installer = root / "dist" / "handshaker-windows-maintained-2.6.0-r1-x86.exe"
 data = installer.read_bytes()
 
 assert data[:2] == b"MZ"

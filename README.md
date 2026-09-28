@@ -15,7 +15,7 @@
 
 - 保留原版 HandShaker 主程序, 资源, 依赖和通信方式.
 - 内置完整客户端和安装依赖, 不再调用官方 Web 下载服务.
-- 保留原版 ADB 和驱动链路, 避免改变已经验证可用的设备连接行为.
+- 用仓库内 Android platform-tools 37.0.0 替换官方包中的 ADB, 驱动仍使用官方离线包.
 - 将首次 WinUSB 检测从 15 次, 每次 2 秒调整为 3 次, 每次 250 毫秒.
 - 将安装 ADB 驱动后的检测间隔从 2 秒调整为 500 毫秒, 保留 5 次重试.
 - 提供可重复执行的补丁和校验脚本.
@@ -23,7 +23,9 @@
 
 ## 使用说明
 
-直接运行 `dist/HandShaker-Windows-Maintained-Offline-Setup.exe`. 安装包内置完整客户端, 驱动, Bonjour, 新版 ADB 和维护版 Detector, 无需联网下载或手动安装补丁.
+直接运行 `dist/handshaker-windows-maintained-2.6.0-r1-x86.exe`. 安装包内置完整客户端, 驱动, Bonjour, 新版 ADB 和维护版 Detector, 无需联网下载或手动安装补丁.
+
+关于窗口显示版本 2.6-r1。名称右侧有「项目主页」按钮，打开 Windows 维护版仓库。检查更新读取仓库里的 `update.xml`；发现新版本后下载安装包并打开。
 
 当前文件未使用付费 Windows 代码签名证书. SmartScreen 或 UAC 可能显示"未知发布者"; 少数企业设备可能禁止运行未签名程序.
 
@@ -32,7 +34,7 @@
 - 原程序目标环境为 Windows 8 及以上版本.
 - 原程序集为 32 位 .NET Framework 4.5.2 WPF 程序.
 - Android 设备在 Windows 上使用 USB 连接时, 维护版 Detector 和 AoaLauncher 会自动完成 AOA 模式切换, 无需手动将 USB 用途切换为"文件传输". 如长时间无响应, 可重新插拔数据线并重试.
-- 首次驱动安装, Android AOA 授权弹窗和完整数据加载仍需在 Windows 真机验证.
+- 已在 Windows 真机验证首次驱动安装, Android AOA 授权弹窗和完整数据加载.
 
 ## 构建
 
@@ -43,7 +45,7 @@ py tools\patch_detector.py
 py tools\check_detector.py
 ```
 
-在macOS维护环境中准备完整离线Payload, 需要Python 3, Mono和NSIS:
+在macOS维护环境中准备完整离线Payload, 需要Python 3, Mono和NSIS. 脚本会用 `original/platform-tools` 里固定的 Android platform-tools 37.0.0 覆盖官方包中的 `adb.exe`, `AdbWinApi.dll` 和 `AdbWinUsbApi.dll`, 不读取本机 Android SDK:
 
 ```sh
 ./tools/build_payload.sh
@@ -56,7 +58,7 @@ powershell -ExecutionPolicy Bypass -File tools\build_installer.ps1
 py tools\check_installer.py
 ```
 
-产物输出到 `dist/HandShaker.Detector.exe` 和 `dist/HandShaker-Windows-Maintained-Offline-Setup.exe`.
+产物输出到 `dist/HandShaker.Detector.exe` 和 `dist/handshaker-windows-maintained-2.6.0-r1-x86.exe`.
 
 受支持的原始文件 SHA-256:
 
@@ -68,7 +70,7 @@ py tools\check_installer.py
 
 ```text
 .
-├── original/                   # 原始完整包和Detector
+├── original/                   # 原始完整包, Detector, platform-tools 37.0.0
 ├── assets/                     # Windows统一图标资源
 ├── src/
 │   ├── HandShaker.Detector.il  # Detector反编译IL

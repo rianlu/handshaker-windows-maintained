@@ -1,4 +1,4 @@
-Unicode true
+﻿Unicode true
 RequestExecutionLevel admin
 SilentInstall silent
 AutoCloseWindow true
@@ -41,6 +41,7 @@ Section "HandShaker"
   WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\HandShaker" "DisplayIcon" "$INSTDIR\HandShaker.exe"
   WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\HandShaker" "UninstallString" '"$INSTDIR\HandShakerUninst.exe"'
 
+  RMDir /r "$SMPROGRAMS\HandShaker"
   CreateDirectory "$SMPROGRAMS\HandShaker"
   CreateShortcut "$SMPROGRAMS\HandShaker\HandShaker.lnk" "$INSTDIR\HandShaker.AoaLauncher.exe" "" "$INSTDIR\MyIcon.ico"
   CreateShortcut "$SMPROGRAMS\HandShaker\卸载 HandShaker.lnk" "$INSTDIR\HandShakerUninst.exe"
