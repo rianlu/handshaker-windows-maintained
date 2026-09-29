@@ -281,6 +281,61 @@
       </Setter.Value>
     </Setter>
   </Style>
+  <Style x:Key="UninstallButtonStyle" TargetType="{x:Type Button}">
+    <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Button}">
+          <Border Name="Chrome" BorderThickness="1" CornerRadius="4" BorderBrush="#e52e28" SnapsToDevicePixels="True" Height="34">
+            <Border.Effect>
+              <DropShadowEffect Color="#54000000" BlurRadius="3" ShadowDepth="1" Direction="270" Opacity="0.35" />
+            </Border.Effect>
+            <Border.Background>
+              <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#eb6a63" Offset="0" />
+                <GradientStop Color="#e34c46" Offset="1" />
+              </LinearGradientBrush>
+            </Border.Background>
+            <TextBlock Name="text" Margin="17,0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FFFFFFFF" FontSize="14" Text="{TemplateBinding Content}" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="UIElement.IsMouseOver" Value="True">
+              <Setter TargetName="Chrome" Property="Border.Background">
+                <Setter.Value>
+                  <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#d8524b" Offset="0" />
+                    <GradientStop Color="#db5a54" Offset="1" />
+                  </LinearGradientBrush>
+                </Setter.Value>
+              </Setter>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="Chrome" Property="Border.BorderBrush" Value="#FFBB2F29" />
+              <Setter TargetName="Chrome" Property="Border.Background">
+                <Setter.Value>
+                  <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#d8524b" Offset="0" />
+                    <GradientStop Color="#db5a54" Offset="1" />
+                  </LinearGradientBrush>
+                </Setter.Value>
+              </Setter>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter TargetName="text" Property="Foreground" Value="#ADADAD" />
+              <Setter TargetName="Chrome" Property="Border.Background">
+                <Setter.Value>
+                  <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#d8524b" Offset="0" />
+                    <GradientStop Color="#db5a54" Offset="1" />
+                  </LinearGradientBrush>
+                </Setter.Value>
+              </Setter>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
   <Style x:Key="SecondaryButtonStyle" TargetType="{x:Type Button}">
     <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}" />
     <Setter Property="Template">

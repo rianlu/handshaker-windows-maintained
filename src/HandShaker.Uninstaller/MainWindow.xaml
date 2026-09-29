@@ -9,8 +9,8 @@
         <Border Height="37" BorderThickness="0,0,0,1" BorderBrush="#b7b7b7">
           <Border.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-              <GradientStop Color="#FFEAEAEA" Offset="0" />
-              <GradientStop Color="#FFDCDCDD" Offset="1" />
+              <GradientStop Color="#FFEBEBEB" Offset="0" />
+              <GradientStop Color="#FFDADADB" Offset="1" />
             </LinearGradientBrush>
           </Border.Background>
           <Grid>
@@ -36,7 +36,7 @@
             </LinearGradientBrush>
           </Border.Background>
           <DockPanel>
-            <Button Name="btnStart" DockPanel.Dock="Right" Margin="12,0,16,0" VerticalAlignment="Center" Content="{StaticResource Start uninstall}" Style="{DynamicResource StartInstallButtonStyle}" Click="StartUninstall_Click" />
+            <Button Name="btnStart" DockPanel.Dock="Right" Margin="12,0,16,0" VerticalAlignment="Center" Content="{StaticResource Start uninstall}" Style="{DynamicResource UninstallButtonStyle}" Click="StartUninstall_Click" />
             <CheckBox Name="chkKeepUserFile" Margin="16,0,0,0" Content="{StaticResource Keep the relevant user files}" Foreground="#cc000000" VerticalAlignment="Center" Style="{DynamicResource CheckBoxStyle}" IsChecked="True" />
           </DockPanel>
         </Border>
@@ -49,12 +49,6 @@
             </StackPanel>
             <controls:HSProgressBar x:Name="progressBar" Value="0" Height="5" Margin="0,10,0,0" />
           </StackPanel>
-        </Border>
-        <Border Name="completionView" BorderBrush="#f0f0f0" BorderThickness="0,1,0,0" Height="66" Visibility="Collapsed">
-          <DockPanel Margin="20,0">
-            <Button Name="btnFinish" DockPanel.Dock="Right" Margin="12,0,0,0" VerticalAlignment="Center" Content="{StaticResource Close}" Style="{DynamicResource SecondaryButtonStyle}" Click="Finish_Click" />
-            <TextBlock Name="completionMessage" VerticalAlignment="Center" Foreground="#9a000000" FontSize="13" Text="{StaticResource Uninstall complete}" />
-          </DockPanel>
         </Border>
       </StackPanel>
     </Border>

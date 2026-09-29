@@ -12,7 +12,6 @@
   <sys:String x:Key="Download file failed">The offline installation package is incomplete.</sys:String>
   <sys:String x:Key="Install framework prompt">It seems the app was installed under compatability mode. This will cause problems in installing .Net Framework 4.5, so the compatability mode settings have now been changed. Please try running the installation again.</sys:String>
   <sys:String x:Key="Install framework error">.Net framework 4.5 wasn't installed properly!</sys:String>
-  <sys:String x:Key="Time left">Time Remaining</sys:String>
   <sys:String x:Key="NSHumanReadableCopyright">
 Copyright © 2017, Smartisan Digital Co., Ltd, all rights reserved.
     </sys:String>

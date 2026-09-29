@@ -4,7 +4,4 @@
   <sys:String x:Key="Uninstall in progress">Uninstalling...</sys:String>
   <sys:String x:Key="Keep the relevant user files">Keep related user files</sys:String>
   <sys:String x:Key="Start uninstall">Uninstall</sys:String>
-  <sys:String x:Key="Uninstall complete">HandShaker was uninstalled. Click Close to finish.</sys:String>
-  <sys:String x:Key="Uninstall failed">Uninstall was not completed. Point here for details.</sys:String>
-  <sys:String x:Key="Close">Close</sys:String>
 </ResourceDictionary>

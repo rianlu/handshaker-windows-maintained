@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
@@ -7,7 +8,6 @@ namespace HandShakerUninstaller
     public partial class MainWindow : Window
     {
         private readonly BackgroundWorker worker = new BackgroundWorker();
-        private bool uninstallSucceeded;
 
         public MainWindow()
         {
@@ -57,21 +57,13 @@ namespace HandShakerUninstaller
 
         private void UninstallCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            closeBtn.IsEnabled = true;
-            uninstallationView.Visibility = Visibility.Collapsed;
-            completionView.Visibility = Visibility.Visible;
-            uninstallSucceeded = e.Error == null;
-            completionMessage.Text = (string)Application.Current.Resources[
-                uninstallSucceeded ? "Uninstall complete" : "Uninstall failed"];
-            if (e.Error != null)
+            if (e.Cancelled)
             {
-                completionMessage.ToolTip = e.Error.Message;
+                return;
             }
-        }
 
-        private void Finish_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
+            UninstallTask.ScheduleSelfDelete();
+            Environment.Exit(0);
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -82,15 +74,6 @@ namespace HandShakerUninstaller
                 return;
             }
             base.OnClosing(e);
-        }
-
-        protected override void OnClosed(System.EventArgs e)
-        {
-            if (uninstallSucceeded)
-            {
-                UninstallTask.ScheduleSelfDelete();
-            }
-            base.OnClosed(e);
         }
     }
 }

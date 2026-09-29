@@ -12,7 +12,6 @@
   <sys:String x:Key="Download file failed">离线安装包不完整。</sys:String>
   <sys:String x:Key="Install framework prompt">检测到安装程序以兼容模式运行，这会导致.net framework 4.5 不能正确安装。兼容模式设置已修改，请重新运行安装程序。</sys:String>
   <sys:String x:Key="Install framework error">.Net framework 4.5 没有正确安装!</sys:String>
-  <sys:String x:Key="Time left">剩余时间</sys:String>
   <sys:String x:Key="NSHumanReadableCopyright">
 Copyright © 2017, Smartisan Digital Co., Ltd，保留一切权利。
     </sys:String>
