@@ -8,10 +8,15 @@ OUTPUT = ROOT / "dist" / "HandShaker.Detector.exe"
 SOURCE_SHA256 = "4732405f7a9cc014c8d95e0de2a4050538a2408ae82f40fc05b9ed71daec1b88"
 
 # SwitchToAoa 中的三个常量: 首轮间隔, 首轮次数, 驱动安装后的间隔.
+# 末项把 OpenDevice 或 SendCommand 失败时的返回值改为成功, 避免把切换前的设备交给 ADB.
 PATCHES = {
     0x2925: (bytes.fromhex("d0 07 00 00"), bytes.fromhex("fa 00 00 00")),
     0x2940: (bytes.fromhex("0f"), bytes.fromhex("03")),
     0x2954: (bytes.fromhex("d0 07 00 00"), bytes.fromhex("f4 01 00 00")),
+    0x299A: (
+        bytes.fromhex("28 04 00 00 06 2c 07 28 03 00 00 06 17 2a 16 2a"),
+        bytes.fromhex("28 04 00 00 06 2c 07 28 03 00 00 06 17 2a 17 2a"),
+    ),
 }
 
 

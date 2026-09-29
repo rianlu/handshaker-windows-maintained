@@ -43,11 +43,23 @@ static class AoaSwitch
                     Marshal.WriteInt32(detail, IntPtr.Size == 8 ? 8 : 6);
                     if (SetupDiGetDeviceInterfaceDetail(set, ref data, detail, required, out required, IntPtr.Zero)) {
                         var path = Marshal.PtrToStringUni(IntPtr.Add(detail, 4));
-                        if (path != null && path.IndexOf("VID_18D1", StringComparison.OrdinalIgnoreCase) < 0 && seen.Add(path)) yield return path;
+                        if (path != null && !AlreadyAccessory(path) && seen.Add(path)) yield return path;
                     }
                 } finally { Marshal.FreeHGlobal(detail); }
             }
         } finally { SetupDiDestroyDeviceInfoList(set); }
+    }
+
+    // 2D00-2D03 已经是 AOA 配件. 18D1 的其他 PID, 例如小米只开调试时的 4EE7, 仍要切换.
+    static bool AlreadyAccessory(string path)
+    {
+        var index = path.IndexOf("pid_", StringComparison.OrdinalIgnoreCase);
+        if (index < 0 || index + 8 > path.Length) return false;
+        var pid = path.Substring(index + 4, 4);
+        return pid.Equals("2d00", StringComparison.OrdinalIgnoreCase)
+            || pid.Equals("2d01", StringComparison.OrdinalIgnoreCase)
+            || pid.Equals("2d02", StringComparison.OrdinalIgnoreCase)
+            || pid.Equals("2d03", StringComparison.OrdinalIgnoreCase);
     }
 
     static bool Transfer(IntPtr handle, byte type, byte request, ushort index, byte[] data)

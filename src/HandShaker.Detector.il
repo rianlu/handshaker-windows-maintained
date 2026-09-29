@@ -5963,7 +5963,7 @@
     IL_013a:  ldc.i4.1
     IL_013b:  ret
 
-    IL_013c:  ldc.i4.0
+    IL_013c:  ldc.i4.1
     IL_013d:  ret
   } // end of method MainWindow::SwitchToAoa
 

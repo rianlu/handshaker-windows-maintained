@@ -19,6 +19,7 @@ VIAddVersionKey /LANG=2052 "CompanyName" "HandShaker Maintained"
 VIAddVersionKey /LANG=2052 "LegalCopyright" "HandShaker Maintained"
 
 Section "HandShaker"
+  nsExec::ExecToLog 'taskkill /F /IM HandShaker.AoaLauncher.exe'
   nsExec::ExecToLog 'taskkill /F /IM HandShaker.Detector.exe'
   nsExec::ExecToLog 'taskkill /F /IM HandShaker.exe'
   nsExec::ExecToLog 'taskkill /F /IM HandShakerStart.exe'
