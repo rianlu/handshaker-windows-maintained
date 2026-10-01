@@ -17,7 +17,7 @@
 
 ## 功能状态
 
-- 提供完整离线安装包, 安装时不再访问官方下载服务器.
+- 基于官方 Windows 离线安装包制作维护版.
 - 连接 Android 手机时自动切换 AOA, 无需手动将 USB 用途改为「文件传输」.
 - 缩短非锤子设备切换 AOA 前的固定等待.
 - 使用 Android platform-tools 37.0.0.
@@ -25,7 +25,7 @@
 
 ## 下载与使用
 
-从 [Releases](https://github.com/rianlu/handshaker-windows-maintained/releases) 下载安装包. 最新版本见 [Latest Release](https://github.com/rianlu/handshaker-windows-maintained/releases/latest).
+安装包不在仓库里. 从 [Releases](https://github.com/rianlu/handshaker-windows-maintained/releases) 下载, 最新版本见 [Latest Release](https://github.com/rianlu/handshaker-windows-maintained/releases/latest). 应用内「检查更新」使用的地址写在 `update.xml`.
 
 1. 运行安装包.
 2. 若 SmartScreen 提示未知发布者, 选择仍要运行.
@@ -66,7 +66,12 @@ powershell -ExecutionPolicy Bypass -File tools\build_installer.ps1
 py tools\check_installer.py
 ```
 
-产物输出到 `dist/HandShaker.Detector.exe` 和 `dist/handshaker-windows-maintained-2.6.0-r1-x86.exe`. 发布时同步更新 `update.xml`, 应用内检查更新读取的是这个文件.
+本地产物在 `dist/`, 这个目录不提交:
+
+- `dist/HandShaker.Detector.exe`
+- `dist/handshaker-windows-maintained-2.6.0-r1-x86.exe`
+
+发布时把安装包上传到 GitHub Releases, 并更新 `update.xml` 里的版本号, 下载地址, 文件名和 MD5. 已发布的文件以 Releases 为准, 不要从旧提交里取出 `dist/` 下的安装包.
 
 受支持的原始 Detector SHA-256:
 
@@ -88,7 +93,7 @@ py tools\check_installer.py
 ├── tools/                      # 补丁, 构建和校验脚本
 ├── update.xml                  # 应用内检查更新使用的版本说明
 ├── build/                      # 构建缓存与中间产物, 不入库
-└── dist/                       # 可交付文件
+└── dist/                       # 本地安装包, 不入库
 ```
 
 ## 已知限制

@@ -1,2 +1,7 @@
 .DS_Store
 build/
+dist/
+bin/
+obj/
+__pycache__/
+*.pyc
